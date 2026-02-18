@@ -8,6 +8,6 @@ public class DocMultilangApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DocMultilangApplication.class, args);
+        System.out.println("get swagger http://localhost:8080/swagger-ui/index.html");
     }
-
 }
