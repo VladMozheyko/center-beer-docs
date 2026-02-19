@@ -6,8 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "documents",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"document_type_id", "language_id"})})
+@Table(name = "documents")
 @Data
 public class Document {
 
