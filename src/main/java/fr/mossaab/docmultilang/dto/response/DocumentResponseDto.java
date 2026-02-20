@@ -15,6 +15,7 @@ public class DocumentResponseDto {
     private Long id;
     private String typeName;
     private String languageName;
-    private String version;
+    private Integer version;
+    private String content;
     private LocalDateTime createAt;
 }

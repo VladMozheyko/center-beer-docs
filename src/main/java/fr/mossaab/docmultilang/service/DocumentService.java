@@ -84,11 +84,13 @@ public class DocumentService {
 
         // Деактивируем все существующие записи (если они активны)
         int counterDocumentsDeactivated = 0;
+        Integer maxVersion = 0;
         for (Document d : existing) {
             if (d.isActive()) {
                 d.setActive(false);
                 repo.save(d);
                 counterDocumentsDeactivated++;
+                if (d.getVersion() > maxVersion) maxVersion = d.getVersion();
             }
         }
         if (counterDocumentsDeactivated > 0) {
@@ -101,10 +103,10 @@ public class DocumentService {
         doc.setLanguage(language);
         doc.setActive(true);
         doc.setContent(dto.getContent());
-        doc.setVersion(dto.getVersion());
+        doc.setVersion(++maxVersion);
         Document savedDocument = repo.save(doc);
 
-        log.info("Документ {}-{} версия {} сохранен", dto.getTypeCode(), dto.getLangCode(), dto.getVersion());
+        log.info("Документ {}-{} версия {} сохранен", savedDocument.getType().getName(), savedDocument.getLanguage().getName(), savedDocument.getVersion());
         return EntityToDtoMapper.toDto(savedDocument);
     }
 }

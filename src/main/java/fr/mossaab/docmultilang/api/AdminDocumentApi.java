@@ -42,7 +42,7 @@ public interface AdminDocumentApi {
                                                             {
                                                                 "id": 1,
                                                                 "typeName": "Правила",
-                                                                "languageName": "Russian",
+                                                                "languageName": "Русский",
                                                                 "version": "1.0"
                                                             }"""
                                             )
@@ -65,7 +65,6 @@ public interface AdminDocumentApi {
                                                                 "details": {
                                                                     "typeCode": "Тип обязателен",
                                                                     "langCode": "Язык обязателен",
-                                                                    "version": "Версия документа не может быть пустой"
                                                                 }
                                                             }"""
                                             )
@@ -107,7 +106,6 @@ public interface AdminDocumentApi {
                                             {
                                                 "typeCode": "rules",
                                                 "langCode": "ru",
-                                                "version": "1.0",
                                                 "content": "Текст документа на русском языке"
                                             }"""
                             )})) @org.springframework.web.bind.annotation.RequestBody @Valid DocumentCreateRequest dto);
@@ -252,7 +250,7 @@ public interface AdminDocumentApi {
                             value = """
                                     {
                                         "code": "ru",
-                                        "name": "Russian"
+                                        "name": "Русский"
                                     }"""
                     )}
                     )

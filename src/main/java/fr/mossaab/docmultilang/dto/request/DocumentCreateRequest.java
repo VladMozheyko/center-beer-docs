@@ -20,12 +20,6 @@ public class DocumentCreateRequest {
     @NotBlank(message = "Язык обязателен")
     @Size(min = 2, max = 2, message = "Значение должно быть в нижнем регистре и состоять из 2 символов ISO 639-1")
     private String langCode;
-    @Pattern(
-            regexp = "^\\d+\\.\\d+$",
-            message = "Формат версии должен быть 'число.число', например: 1.0, 2.5, 10.12"
-    )
-    @NotNull(message = "Версия документа не может быть пустой")
-    private String version;
     @NotBlank(message = "Содержание обязателено")
     private String content;
 }

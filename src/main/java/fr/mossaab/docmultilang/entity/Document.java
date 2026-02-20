@@ -23,7 +23,7 @@ public class Document {
     private Language language;
 
     @Column(nullable = false)
-    private String version;
+    private Integer version;
 
     @Lob
     @Column(nullable = false)

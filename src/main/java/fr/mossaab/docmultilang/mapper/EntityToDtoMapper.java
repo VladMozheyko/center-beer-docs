@@ -15,6 +15,7 @@ public class EntityToDtoMapper {
         dto.setVersion(document.getVersion());
         dto.setLanguageName(document.getLanguage().getName());
         dto.setTypeName(document.getType().getName());
+        dto.setContent(document.getContent());
         dto.setCreateAt(document.getCreatedAt());
         return dto;
     }
