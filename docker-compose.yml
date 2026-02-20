@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql8
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=docmultilang
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=apppassword
+    ports:
+    - "3307:3306"
+    volumes:
+    - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: doc_multi-lang_app
+    container_name: doc_multi-lang_app
+    depends_on:
+      - mysql
+    environment:
+    - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/docmultilang?useSSL=false&serverTimezone=UTC
+    - SPRING_DATASOURCE_USERNAME=appuser
+    - SPRING_DATASOURCE_PASSWORD=apppassword
+    - SERVER_PORT=8443
+    - JAVA_OPTS=-Xms256m -Xmx512m
+    ports:
+    - "8443:8443"
+
+volumes:
+  mysql_data:

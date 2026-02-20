@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <mirrors>
+        <mirror>
+            <id>google-mirror</id>
+            <name>Google Maven Central Mirror</name>
+            <url>https://maven-central.storage-download.googleapis.com/maven2/</url>
+            <mirrorOf>central</mirrorOf>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <id>retry-and-timeouts</id>
+            <properties> <!-- Повторы при 429/5xx -->
+                <maven.wagon.http.retryHandler.count>20</maven.wagon.http.retryHandler.count>
+                <!-- Таймауты (мс) -->
+                <maven.wagon.http.connectionTimeout>60000</maven.wagon.http.connectionTimeout>
+                <maven.wagon.http.readTimeout>120000</maven.wagon.http.readTimeout>
+
+                <!-- Пулы соединений -->
+                <maven.wagon.httpconnectionManager.maxTotal>200</maven.wagon.httpconnectionManager.maxTotal>
+                <maven.wagon.httpconnectionManager.maxPerRoute>50</maven.wagon.httpconnectionManager.maxPerRoute>
+            </properties>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>retry-and-timeouts</activeProfile>
+    </activeProfiles>
+</settings>
