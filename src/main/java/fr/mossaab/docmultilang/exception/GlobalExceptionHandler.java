@@ -4,6 +4,7 @@ import fr.mossaab.docmultilang.exception.dto.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,9 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -30,6 +33,12 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    @Value("${spring.servlet.multipart.max-file-size}")
+    private String maxFileSize;
+
+    @Value("${spring.servlet.multipart.max-request-size}")
+    private String maxRequestSize;
 
     // Общее для ApiException и его подклассов
     @ExceptionHandler(ApiException.class)
@@ -112,6 +121,27 @@ return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     public ResponseEntity<ApiError> handleAll(Exception ex, HttpServletRequest request) {
         log.error("Unhandled exception at {} {}: ", request.getMethod(), request.getRequestURI(), ex);
         ApiError error = new ApiError("INTERNAL_SERVER_ERROR", "Unexpected error: " + ex.getMessage(), null);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /* Обработчик ошибок размера файла */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<?> handleMaxSize(MaxUploadSizeExceededException ex, HttpServletRequest request) {
+        log.error("Загружаемый файл слишком большой в {} {}", request.getMethod(), request.getRequestURI(), ex);
+        Map<String, String> details = Map.of("maxFileSize",  maxFileSize, "maxRequestSize", maxRequestSize);
+        ApiError error = new ApiError("PAYLOAD_TOO_LARGE", "File upload error: " + ex.getMessage(), details);
+        return new ResponseEntity<>(error, HttpStatus.PAYLOAD_TOO_LARGE);
+    }
+
+    /* Обработчик ошибок работы с файлом */
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<?> handleIO(IOException ex, HttpServletRequest request) {
+        log.error("Ошибка сохранения/чтения файла в {} {}: {}", request.getMethod(), request.getRequestURI(), ex.getMessage());
+        ApiError error = new ApiError(
+                "IO_ERROR",
+                "Ошибка сохранения файла",
+                null
+        );
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
