@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,9 @@ public class FileService {
     private final FileUploadConfig fileUploadConfig;
 
     private FileStorageService fileStorageService;
+
+    @Value("${app.file-path:/data/files}")
+    private String basePath;
 
     /* Конструктор для будущих реализаций хранения файлов
     * localFileStorageService - имя реализации хранения реализующий интерфейс FileStorageService
@@ -94,7 +98,8 @@ public class FileService {
 
     // Получить Resource по FileData с проверкой доступности файла
     public Resource asResource(FileData fileData) throws IOException {
-        Path filePath = Paths.get(fileData.getFilePath());
+        // Склеиваем абсолютный путь
+        Path filePath = Paths.get(basePath).resolve(fileData.getFilePath()).normalize();
         Resource resource = new UrlResource(filePath.toUri());
         if (!resource.exists() || !resource.isReadable()) {
             throw new NotFoundException("Файл не существует или не доступен для чтения");

@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,11 +36,11 @@ public interface FileControllerOpenApi {
     })
     @GetMapping("/by-name/{type}/{fileName}")
     ResponseEntity<Resource> downloadByName(
-            @Parameter(description = "Тип файла: .pdf или .png", example = ".pdf", required = true)
-            String type,
+            @Parameter(description = "Тип файла: .pdf или .png", example = ".pdf")
+            @PathVariable String type,
 
-            @Parameter(description = "Техническое имя файла в системе (без расширения)", required = true)
-            String fileName
+            @Parameter(description = "Техническое имя файла в системе (без расширения)")
+            @PathVariable String fileName
     ) throws IOException;
 
     @Operation(
@@ -56,10 +58,10 @@ public interface FileControllerOpenApi {
     @GetMapping("/by-id/{id}/{type}")
     ResponseEntity<Resource> downloadById(
             @Parameter(description = "ID файла в базе данных", required = true)
-            Long id,
+            @PathVariable Long id,
 
             @Parameter(description = "Тип файла: .pdf или .png", example = ".pdf", required = true)
-            String type
+            @PathVariable String type
     ) throws IOException;
 
     @Operation(
@@ -93,7 +95,7 @@ public interface FileControllerOpenApi {
     @GetMapping("/all")
     Page<FileDataDTO> listFiles(
             @Parameter(description = "Тип файла для фильтрации (.pdf, .png). Необязательный.")
-            String type,
+            @RequestParam(value = "type", required = false) String type,
 
             @Parameter(description = "Параметры фильтрации, сортировки и пагинации")
             Pageable pageable
@@ -106,7 +108,7 @@ public interface FileControllerOpenApi {
             Загружает файл в систему.<br/>
             <ul>
             <li>Форматы: только PDF (.pdf, application/pdf) и PNG (.png, image/png)</li>
-            <li>Проверяются расширение и MIME-type</li>
+            <li>Без указания типа будут возвращаться все файлы</li>
             <li>Ограничения по размеру настраиваются на уровне приложения(Max 10мб)</li>
             </ul>
             """
