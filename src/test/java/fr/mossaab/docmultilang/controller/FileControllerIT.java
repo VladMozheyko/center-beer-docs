@@ -40,7 +40,6 @@ class FileControllerIT {
     @BeforeAll
     void prepareFilePath() {
         System.setProperty("app.file-path", dataDir);
-        new File(dataDir).mkdirs();
     }
 
     @AfterAll

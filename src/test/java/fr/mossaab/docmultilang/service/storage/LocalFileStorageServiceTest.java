@@ -1,6 +1,5 @@
 package fr.mossaab.docmultilang.service.storage;
 
-import fr.mossaab.docmultilang.service.storage.LocalFileStorageService;
 import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -95,6 +94,7 @@ class LocalFileStorageServiceTest {
         String one = ReflectionTestUtils.invokeMethod(storageService, "generateUniqueFileName", "docu", "pdf");
         String two = ReflectionTestUtils.invokeMethod(storageService, "generateUniqueFileName", "docu", "pdf");
         assertNotEquals(one, two);
+        assert one != null;
         assertTrue(one.startsWith("docu_"));
         assertTrue(one.endsWith(".pdf"));
     }

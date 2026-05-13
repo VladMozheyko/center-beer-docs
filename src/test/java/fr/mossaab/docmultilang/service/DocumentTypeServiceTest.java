@@ -4,7 +4,6 @@ import fr.mossaab.docmultilang.dto.response.DocumentTypeResponseDto;
 import fr.mossaab.docmultilang.entity.DocumentType;
 import fr.mossaab.docmultilang.exception.ConflictException;
 import fr.mossaab.docmultilang.repository.DocumentTypeRepository;
-import fr.mossaab.docmultilang.service.DocumentTypeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

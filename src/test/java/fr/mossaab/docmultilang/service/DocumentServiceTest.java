@@ -12,7 +12,6 @@ import fr.mossaab.docmultilang.exception.DocumentNotFoundException;
 import fr.mossaab.docmultilang.repository.DocumentRepository;
 import fr.mossaab.docmultilang.repository.DocumentTypeRepository;
 import fr.mossaab.docmultilang.repository.LanguageRepository;
-import fr.mossaab.docmultilang.service.DocumentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

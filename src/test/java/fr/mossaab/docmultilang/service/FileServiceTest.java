@@ -7,7 +7,6 @@ import fr.mossaab.docmultilang.entity.FileData;
 import fr.mossaab.docmultilang.exception.BadRequestException;
 import fr.mossaab.docmultilang.exception.NotFoundException;
 import fr.mossaab.docmultilang.repository.FileDataRepository;
-import fr.mossaab.docmultilang.service.FileService;
 import fr.mossaab.docmultilang.service.storage.FileStorageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

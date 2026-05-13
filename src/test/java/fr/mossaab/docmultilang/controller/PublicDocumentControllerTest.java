@@ -1,8 +1,6 @@
 package fr.mossaab.docmultilang.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.mossaab.docmultilang.controller.PublicDocumentController;
 import fr.mossaab.docmultilang.dto.DocumentTypeListDto;
 import fr.mossaab.docmultilang.dto.response.DocumentResponseDto;
 import fr.mossaab.docmultilang.entity.DocumentType;
@@ -21,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.*;

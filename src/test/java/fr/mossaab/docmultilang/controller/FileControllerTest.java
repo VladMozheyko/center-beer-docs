@@ -1,8 +1,5 @@
 package fr.mossaab.docmultilang.controller;
 
-import fr.mossaab.docmultilang.api.FileControllerOpenApi;
-import fr.mossaab.docmultilang.controller.FileController;
-import fr.mossaab.docmultilang.dto.FileDataDTO;
 import fr.mossaab.docmultilang.entity.FileData;
 import fr.mossaab.docmultilang.exception.BadRequestException;
 import fr.mossaab.docmultilang.service.FileService;
@@ -160,7 +157,7 @@ class FileControllerTest {
     @DisplayName("Private util методы контроллера")
     class PrivateUtilMethodTests {
         @Test
-        void getMediaTypeByExtension_whenPdfOrPng_returnsMediaType() throws Exception {
+        void getMediaTypeByExtension_whenPdfOrPng_returnsMediaType() {
             FileController ctrl = new FileController(fileService);
             assertEquals(MediaType.APPLICATION_PDF,
                     org.springframework.test.util.ReflectionTestUtils.invokeMethod(ctrl, "getMediaTypeByExtension", ".pdf"));
@@ -180,6 +177,7 @@ class FileControllerTest {
             FileController ctrl = new FileController(fileService);
             String name = "Документ 1.pdf";
             String ascii = org.springframework.test.util.ReflectionTestUtils.invokeMethod(ctrl, "toAsciiFileName", name, ".pdf");
+            assert ascii != null;
             assertTrue(ascii.matches("^[A-Za-z0-9_.-]+\\.pdf$"));
         }
     }
