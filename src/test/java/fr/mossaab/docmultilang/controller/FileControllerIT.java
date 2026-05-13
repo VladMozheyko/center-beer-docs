@@ -86,7 +86,7 @@ class FileControllerIT {
                 .andExpect(jsonPath("$.content[0].name").value(savedName));
 
         // Physical file present
-        File savedFile = searchPhysicalFile(dataDir, savedName, ".pdf");
+        File savedFile = searchPhysicalFile(dataDir, savedName);
         assertTrue(savedFile != null && savedFile.exists());
     }
 
@@ -108,12 +108,12 @@ class FileControllerIT {
     }
 
     // Вспомогательный метод для поиска файла
-    private File searchPhysicalFile(String rootDir, String name, String ext) throws Exception {
+    private File searchPhysicalFile(String rootDir, String name) {
         File root = new File(rootDir);
         for (File d : Objects.requireNonNull(root.listFiles())) {
             if (d.isDirectory()) {
                 for (File f : Objects.requireNonNull(d.listFiles())) {
-                    if (f.getName().startsWith(name) && f.getName().endsWith(ext)) {
+                    if (f.getName().startsWith(name) && f.getName().endsWith(".pdf")) {
                         return f;
                     }
                 }

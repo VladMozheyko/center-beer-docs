@@ -96,9 +96,6 @@ class PublicDocumentControllerIT {
     @Test
     @DisplayName("listAllDocumentsType: выдаёт все типы документов")
     void listAllDocumentsType_allTypes() throws Exception {
-        DocumentType type1 = typeRepo.save(DocumentType.builder().code("rules").name("Правила").build());
-        DocumentType type2 = typeRepo.save(DocumentType.builder().code("offer").name("Оферта").build());
-
         mockMvc.perform(get("/documents/all_documents_type"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
