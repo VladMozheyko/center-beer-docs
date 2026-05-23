@@ -32,7 +32,7 @@ public class Document {
     private Integer version;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
     private boolean active;
