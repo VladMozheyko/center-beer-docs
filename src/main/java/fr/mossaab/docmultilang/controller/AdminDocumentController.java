@@ -10,7 +10,6 @@ import fr.mossaab.docmultilang.dto.response.LanguageResponseDto;
 import fr.mossaab.docmultilang.service.DocumentService;
 import fr.mossaab.docmultilang.service.DocumentTypeService;
 import fr.mossaab.docmultilang.service.LanguageService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
